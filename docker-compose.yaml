@@ -4,16 +4,27 @@ services:
 
   app:
     build:
+    
+    # Use which dockerfile to build up the app container
       context: .
       dockerfile: Dockerfile_Dev
 
+    # 本地 ./build/libs/wholesale-0.0.1-SNAPSHOT.jar 同步映射到 container 中的 /app/app.jar
+    # 本地 ./build/libs/wholesale-0.0.1-SNAPSHOT.jar 会因为 gradle 重新 build 而进行变更
+    # Volume 在 docker compose down 的时候，依然运行，independent to docker file & image
     volumes:
       - "./build/libs/wholesale-0.0.1-SNAPSHOT.jar:/app/app.jar"
+    
+    # 命名 container
     container_name: app
+    
+    # app 构建基于 db-postgres
     depends_on:
       - db-postgres
     ports:
       - 8080:8080
+      
+    # Environment 给对应 EntryPoint 中运行的.sh脚本中的变量赋值
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db-postgres:5432/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
@@ -22,9 +33,15 @@ services:
       - SPRING_FLYWAY_USER=postgres
       - SPRING_FLYWAY_PASSWORD=mysecretpassword
 
+
+
   db-postgres:
+    
+    # 使用初始的 postgre image，直接 import
     image: postgres:13.0-alpine
     container_name: db-postgres
+    
+    # volume 类似移动硬盘，将本地source和在container里的target路径中的数据库 连起来同步数据
     volumes:
       - type: volume
         source: db-data
