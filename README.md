@@ -55,3 +55,10 @@
 * Dockerfile utilize multi stage and put application files into docker instead of using fat jar.
 * Utilize Spring security to implement authentication and authorization. 
 * Docker compose has been used in local to easily set up the local environment.
+
+
+## Personal Note for Docker related revision
+* Dockerfile, Dockerfile_dev
+* Docker-compose
+* Scripts/start.sh, Scrpits/start_dev.sh
+* Know where the entrance of the program (where Java start to load the whole program)
