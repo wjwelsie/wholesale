@@ -62,3 +62,8 @@
 * Docker-compose
 * Scripts/start.sh, Scrpits/start_dev.sh
 * Know where the entrance of the program (where Java start to load the whole program)
+* Docker image: build once, use everywhere
+
+## Note for unit tests
+* DAO interacts with db
+* Service layer does not interact with db, therefore, no need the existance of db to run all the service layer unit tests
